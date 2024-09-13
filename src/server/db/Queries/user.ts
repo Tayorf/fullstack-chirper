@@ -10,7 +10,7 @@ interface NewUserObject{
 };
 
 const create = (newUser: NewUserObject) => ModifyQuery('INSERT INTO users SET ?', [newUser]);
-const update = (id: number, updatedUser: NewUserObject) => ModifyQuery('UPDATE users SET ? WHERE id=?', [updatedUser,id]);
+const update = (id:number, updatedUser: NewUserObject) => ModifyQuery('UPDATE users SET ? WHERE id=?', [updatedUser, id]);
 const destroy =(id:number) => ModifyQuery('DELETE from users WHERE id=?', [id]);
 
 export default{

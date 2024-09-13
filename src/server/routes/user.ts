@@ -31,7 +31,17 @@ router.get('/:id', async(req, res)=>{
 
 router.post('/', async(req, res)=>{
     try{
-        const {}
+       const { email, handle } = req.body;
+
+        if (!email || typeof email !== "string" || email.length < 6 || email.length > 50) {
+          res.status(400).json({ message: "Email's required and must be between 6 and 50 characters" });
+        }
+
+        if (!handle || typeof handle !== "string" || handle.length < 4 || handle.length > 20) {
+          res.status(400).json({ message: "Handle is required and must be between 4 and 20 characters" });
+        }
+
+        // DB code
     } catch (error) {
         console.log (error);
         res.status(500).json({message: "error creating that user"});
@@ -41,6 +51,15 @@ router.post('/', async(req, res)=>{
 router.put('/:id', async(req, res)=>{
     const id=parseInt(req.params.id);
     try{
+        const { email, handle } = req.body;
+const results = await db.user.update(id, { email, handle });
+        if (results.affectedRows===0){
+            res.status(404).json({message:"could not update user with that ID"});
+            return;
+
+        }
+        res.json({Message:"Successfully updated user!"});
+
 
     } catch (error) {
         console.log (error);
