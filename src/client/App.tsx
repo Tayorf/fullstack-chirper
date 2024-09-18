@@ -1,22 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+ import { BrowserRouter, Routes, Route } from 'react-router-dom';
+ import Navbar from './components/Navbar';
 
-interface AppProps {}
+ const App = () => {
+	return <BrowserRouter>
+	<Navbar />
 
-const App = (props: AppProps) => {
-	const [data, setData] = useState('');
+	<Routes>
+		<Route path ='/'element= {<h1>Home!</h1>}/>
+		<Route path ='/chirps'element= {<h1>Todays Posts</h1>}/>
+		<Route path ='/chirps/new'element= {<h1>Create a Post</h1>}/>
+		<Route path ='/chirps/:id'element= {<h1> Post details</h1>}/>
+		<Route path ='/chirps/:id/edit'element= {<h1>Edit or delete post</h1>}/>
+	</Routes>
+	</BrowserRouter>
+ };
 
-	useEffect(() => {
-		fetch('http://localhost:3000/api/hello')
-			.then(res => res.json())
-			.then(data => setData(data.message))
-			.catch(e => console.log('[fetch erorr]', e));
-	}, []);
-
-	return (
-		<div className="mx-auto mt-5 w-25">
-			<div className="alert alert-info text-center">Hello {data}</div>
-		</div>
-	);
-};
-
-export default App;
+ export default App;
