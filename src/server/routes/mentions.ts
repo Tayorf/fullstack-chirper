@@ -3,66 +3,24 @@ import db from '../db';
 
 const router = express.Router();
 
-router.get('/', async(req, res)=>{
-    try{
-        const user =await db.mentions.getAll()
-        res.json(user);
-    } catch (error) {
-        console.log (error);
-        res.status(500).json({message: "error getting all mentions"});
-    }
-});
-
-router.get('/:id', async(req, res)=>{
-    const id=parseInt(req.params.id);
-    try{
-        const [mentions] =await db.mentions.getOne(id);
-
-        if(!mentions){
-            res.status(404).json({message:"could not get mention with that ID"});
-            return;
-        }
-        res.json(mentions)
-    } catch (error) {
-        console.log (error);
-        res.status(500).json({message: "error getting that mention"});
-    }
-});
+// routes/mentions.ts
 
 router.post('/', async(req, res)=>{
     try{
-       const { email, handle } = req.body;
+       const { chirp_id, user_id } = req.body;
 
-        if (!email || typeof email !== "string" || email.length < 6 || email.length > 50) {
-          res.status(400).json({ message: "Email's required and must be between 6 and 50 characters" });
+        // In addition to checking for their existance, you could also potentially add in checks to see if `typeof chirp_id !== "number" || typeof user_id !== "number"`  
+        if (!chirp_id || !user_id) {
+          res.status(400).json({ message: "More relevant message here pertaining to chirp and user ids"});
         }
-
-        if (!handle || typeof handle !== "string" || handle.length < 4 || handle.length > 20) {
-          res.status(400).json({ message: "Handle is required and must be between 4 and 20 characters" });
-        }
-
-        // DB code
+      
+        // Repackage into a new object named mentionPair for consistency's sake
+        const mentionPair = { chirp_id: chirp_id, user_id: user_id };
+        // DB code to insert the mention pair
+        res.status(201).json({ message: "<Ice T voice>: Oh hell yeah" });
     } catch (error) {
         console.log (error);
-        res.status(500).json({message: "error creating that post"});
+        res.status(500).json({message: "error creating that mention"});
     }
 });
-
-router.delete('/:id', async(req, res)=>{
-    const id=parseInt(req.params.id);
-    try{
-       const results= await db.mentions.destroy(id);
-        if (results.affectedRows===0){
-            res.status(404).json({message:"could not delete mention with that ID"});
-            return;
-
-        }
-        res.json({Message:"Successfully deleted mention!"});
-
-    } catch (error) {
-        console.log (error);
-        res.status(500).json({message: "error deleting that mention"});
-    }
-});
-
 export default router;

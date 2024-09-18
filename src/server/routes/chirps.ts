@@ -67,21 +67,16 @@ const results = await db.chirps.update(id, { body, location });
     }
 });
 
-router.delete('/:id', async(req, res)=>{
-    const id=parseInt(req.params.id);
+router.delete('/:id', async (req, res)=>{
     try{
-       const results= await db.chirps.destroy(id);
-        if (results.affectedRows===0){
-            res.status(404).json({message:"could not delete chirp with that ID"});
-            return;
-
-        }
-        res.json({Message:"Successfully deleted chirp!"});
-
+       const id = parseInt(req.params.id);
+       
+       await db.mentions.destroy(id);
+       await db.chirps.destroy(id);
+      res.json({ message: "<Ice T voice>: Oh hell yeah" });
     } catch (error) {
         console.log (error);
-        res.status(500).json({message: "error deleting that chirp"});
+        res.status(500).json({message: "error deleting the mentions associated with that chirp"});
     }
 });
-
 export default router;
