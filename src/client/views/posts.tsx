@@ -1,5 +1,6 @@
 import React,{useEffect, useState} from "react";
 import type { chirps } from "../types";
+import { Link } from "react-router-dom";
 
 const chirps =()=>{
     const [chirps,setchirps]=useState([]);
@@ -17,11 +18,11 @@ const chirps =()=>{
                     <div key={'chirps-card-${chirps.id}'}className='col-12 col-md-4 my-2'>
                         <div className="card shadow-lg">
                     </div>
-                            <div className="card title">
-                            chirps #{chirps.id}
+                            <div className="card title"> chirps #{chirps.id} </div>
+                           
                             <div className="card-body">
-                            </div>
                             <p>{chirps.body}</p>
+                           <Link className ='btn btn-primary' to={'/chirps/$(chirps.id)'}>Details</Link>
                             </div>
                     </div>
                 ))}
