@@ -1,21 +1,23 @@
 import React,{useEffect, useState} from "react";
-import type { chirps } from "../types";
+import type { chirps} from "../types";
 import { Link } from "react-router-dom";
 
-const chirps =()=>{
-    const [chirps,setchirps]=useState([]);
+
+const AllChirps =()=>{
+    const [chirps, setChirps] = useState<chirps[]>([]);
 
     useEffect(()=>{
-        fetch('http://localhost:3000/api/chirps')
-        .then(res =>res.json())
-        .then(data=>setchirps(data));
+        fetch('http://localhost:3000/api/chirps/${id}')
+        .then((res) =>res.json())
+        .then((data)=>setChirps(data));
     },[])
+
     return(
         <div>
-            <h1>These fresh new chirps</h1>
+            <h1>Look at all these chirps!</h1>
             <div className='row'>
                 {chirps.map((chirps)=>(
-                    <div key={'chirps-card-${chirps.id}'}className='col-12 col-md-4 my-2'>
+                    <div key={'chirps-card-${chirps.id}'}className=' col-12 col-md-4 my-2'>
                         <div className="card shadow-lg">
                     </div>
                             <div className="card title"> chirps #{chirps.id} </div>
@@ -29,7 +31,7 @@ const chirps =()=>{
 
             </div>
         </div>
-    )
+    );
 };
 
-export default chirps
+export default AllChirps;

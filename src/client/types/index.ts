@@ -1,3 +1,5 @@
+export type SupportMethods = "GET" | "PUT" | "POST" | "DELETE";
+
 export interface users{
     id:number;
     created_at:Date;

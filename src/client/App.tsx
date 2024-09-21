@@ -2,8 +2,12 @@ import React from 'react';
  import { BrowserRouter, Routes, Route } from 'react-router-dom';
  import Navbar from './components/Navbar';
 import Home from './views/home';
-import chirps from './views/posts';
-import chirpdetails from './views/chirpsdetails';
+import AllChirps from './views/chirps';
+import ChirpDetails from './views/chirpsdetails';
+import ErrorPage from './views/error';
+import CreateChirps from './views/createchirp';
+import EditChirps from './views/editchirps';
+
 
  const App = () => {
 	return <BrowserRouter>
@@ -11,10 +15,11 @@ import chirpdetails from './views/chirpsdetails';
 
 	<Routes>
 		<Route path ='/'element= {<Home />}/>
-		<Route path ='/chirps'element= {<chirps />}/>
-	<Route path ='/chirps/new'element= {<h1>Create a Post</h1>}/>
-		<Route path ='/chirps/:id'element= {<chirpdetails />}/>
-		<Route path ='/chirps/:id/edit'element= {<h1>Edit or delete post</h1>}/>
+		<Route path ='/chirps'element = {<AllChirps />}/>
+	<Route path ='/chirps/create'element= {<CreateChirps />}/>
+		<Route path ='/chirps/:id'element= {<ChirpDetails />}/>
+		<Route path ='/chirps/:id/edit'element= {<EditChirps />}/>
+		<Route path="*" element={<ErrorPage />} />
 	</Routes>
 	</BrowserRouter>
  };
