@@ -1,9 +1,9 @@
 import express from 'express';
 import db from '../db';
 
-const router = express.Router();
+const usersRouter = express.Router();
 
-router.get('/', async(req, res)=>{
+usersRouter.get('/', async(req, res)=>{
     try{
         const users =await db.users.getAll()
         res.json(users);
@@ -13,7 +13,7 @@ router.get('/', async(req, res)=>{
     }
 });
 
-router.get('/:id', async(req, res)=>{
+usersRouter.get('/:id', async(req, res)=>{
     const id=parseInt(req.params.id);
     try{
         const [users] =await db.users.getOne(id);
@@ -29,7 +29,7 @@ router.get('/:id', async(req, res)=>{
     }
 });
 
-router.post('/', async(req, res)=>{
+usersRouter.post('/', async(req, res)=>{
     try{
        const { email, handle } = req.body;
 
@@ -48,7 +48,7 @@ router.post('/', async(req, res)=>{
     }
 });
 
-router.put('/:id', async(req, res)=>{
+usersRouter.put('/:id', async(req, res)=>{
     const id=parseInt(req.params.id);
     try{
         const { email, handle } = req.body;
@@ -67,7 +67,7 @@ const results = await db.users.update(id, { email, handle });
     }
 });
 
-router.delete('/:id', async(req, res)=>{
+usersRouter.delete('/:id', async(req, res)=>{
     const id=parseInt(req.params.id);
     try{
        const results= await db.users.destroy(id);
@@ -84,4 +84,4 @@ router.delete('/:id', async(req, res)=>{
     }
 });
 
-export default router;
+export default usersRouter;

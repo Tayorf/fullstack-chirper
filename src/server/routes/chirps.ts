@@ -2,9 +2,9 @@ import express from 'express';
 import db from '../db';
 import { chirps } from '../types';
 
-const router = express.Router();
+const chirpsRouter = express.Router();
 
-router.get('/', async(req, res)=>{
+chirpsRouter.get('/', async(req, res)=>{
     try{
         const chirps =await db.chirps.getAll()
         res.json(chirps);
@@ -14,7 +14,7 @@ router.get('/', async(req, res)=>{
     }
 });
 
-router.get('/:id', async(req, res)=>{
+chirpsRouter.get('/:id', async(req, res)=>{
     const id=parseInt(req.params.id);
     try{
         const [chirps] =await db.users.getOne(id);
@@ -30,7 +30,7 @@ router.get('/:id', async(req, res)=>{
     }
 });
 
-router.post('/', async(req, res)=>{
+chirpsRouter.post('/', async(req, res)=>{
     try{
        const { body, location } = req.body;
 
@@ -49,7 +49,7 @@ router.post('/', async(req, res)=>{
     }
 });
 
-router.put('/:id', async(req, res)=>{
+chirpsRouter.put('/:id', async(req, res)=>{
     const id=parseInt(req.params.id);
     try{
         const { body, location } = req.body;
@@ -68,7 +68,7 @@ const results = await db.chirps.update(id, { body, location });
     }
 });
 
-router.delete('/:id', async (req, res)=>{
+chirpsRouter.delete('/:id', async (req, res)=>{
     try{
        const id = parseInt(req.params.id);
        
@@ -80,4 +80,4 @@ router.delete('/:id', async (req, res)=>{
         res.status(500).json({message: "error deleting the mentions associated with that chirp"});
     }
 });
-export default router;
+export default chirpsRouter;

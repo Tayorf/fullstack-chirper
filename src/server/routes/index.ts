@@ -1,8 +1,12 @@
-import express from 'express';
-import userRouter from './user'
+import express from "express";
+import mentionsRouter from "./mentions";
+import usersRouter from "./user";
+import chirpsRouter from "./chirps";
 
-const router = express.Router();
+const indexRouter = express.Router();
 
-router.use ('/user',userRouter);
+indexRouter.use("/api/chirps", chirpsRouter);
+indexRouter.use("/api/users", usersRouter);
+indexRouter.use("/api/mentions", mentionsRouter);
 
-export default router;
+export default indexRouter;

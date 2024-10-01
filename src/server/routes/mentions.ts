@@ -1,11 +1,11 @@
 import express from 'express';
 import db from '../db';
 
-const router = express.Router();
+const mentionsRouter = express.Router();
 
 // routes/mentions.ts
 
-router.post('/', async(req, res)=>{
+mentionsRouter.post('/', async(req, res)=>{
     try{
        const { chirp_id, user_id } = req.body;
 
@@ -21,4 +21,4 @@ router.post('/', async(req, res)=>{
         res.status(500).json({message: "error creating that mention"});
     }
 });
-export default router;
+export default mentionsRouter;
