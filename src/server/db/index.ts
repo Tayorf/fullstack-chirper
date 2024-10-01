@@ -1,9 +1,9 @@
-import user from "./Queries/user";
+import users from "./Queries/user";
 import mentions from "./Queries/mentions";
 import chirps from "./Queries/chirps";
 
 export default{
-    user,
+    users,
     mentions,
     chirps,
 };

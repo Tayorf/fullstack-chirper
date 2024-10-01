@@ -15,5 +15,23 @@ $dark: #260e37;           // Dark Blueish Purple
 $link-color: #01cdfe;     // Bright Cyan
 $link-hover-color: darken($link-color, 10%);
 
+// Font
+$font-family-base: "Poppins", sans-serif;
+
 // Bootstrap Import
 @import '~bootstrap/scss/bootstrap.scss';
+
+.navbar-collapse {
+    justify-content: flex-end;
+}
+.navbar-brand {
+    cursor: pointer;
+}
+
+.home-container {
+	left: 50%;
+	position: absolute;
+	top: 45%;
+	transform: translate(-50%, -55%);
+	text-align: center;
+}

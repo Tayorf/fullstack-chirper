@@ -1,5 +1,5 @@
 import { SupportMethods } from "../types";
-
+import Alert from "sweetalert2";
 
 function fetcher<T = any>(url: string, method: SupportMethods, rawData?: unknown) {
 	const headers: HeadersInit = {};

@@ -1,41 +1,52 @@
-import React,{useEffect, useState} from "react";
-import type { chirps } from "../types";
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { DELETE, GET, PUT } from "../services/fetchHelper";
 
+const EditChirp = () => {
+	const { id } = useParams();
+	const [body, setBody] = useState("");
+	const [location, setLocation] = useState("");
+	const nav = useNavigate();
 
-const EditChirps=()=> {
-    const { id } =useParams();
-    const [chirps,setChirps] =useState<chirps>();
+	useEffect(() => {
+		GET(`/api/chirps/${id}`).then((chirps) => {
+			setBody(chirps.body);
+			setLocation(chirps.location);
+		});
+	}, []);
 
-    useEffect(()=>{
-        fetch('http://localhost:3000/api/chirps/${id}')
-        .then((res) =>res.json())
-        .then((data)=>setChirps(data));
-    },[id]);
+	const handleEditChirp = () => {
+		PUT(`/api/chirps/${id}`, { body, location }).then(() => {
+			nav(`/chirps/${id}`);
+		});
+	};
 
-    if (!chirps) {
-		return <div>Loading...</div>;
-    };
+	const deleteChirp = () => {
+		DELETE(`/api/chirps/${id}`).then(() => {
+			nav(`/chirps`);
+		});
+	};
 
-    return (
+	return (
 		<div className="row justify-content-center">
-            <h1 className="text-center text-red">Editing Chirp #{id}</h1>
-			<div className="col-12 col-md-7">
-				<div className="card p-3 my-2 shadow-lg bg-white">
-					<p className="fs-5">{chirps.body}</p>
-
-					<p>Created {new Date(chirps.created_at).toLocaleString()}</p>
-
+			<div className="col-12 col-md-9">
+				<div className="card p-3 shadow-lg my-2">
+					<label>Chirp text:</label>
+					<input value={body} onChange={(e) => setBody(e.target.value)} type="text" className="form-control" />
+					<label>Location:</label>
+					<input value={location} onChange={(e) => setLocation(e.target.value)} type="text" className="form-control" />
 					<div className="card-footer">
-						<p>Chirped from {chirps.location ? chirps.location : "Wouldn't you like to know."}</p>
-						<Link to={`/chirps/${chirps.id}/edit`} className="btn btn-info m-1">
-							Edit Chirp
-						</Link>
+						<button onClick={handleEditChirp} className="btn btn-success m-2">
+							Save
+						</button>
+						<button onClick={deleteChirp} className="btn btn-danger m-2">
+							Delete
+						</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	);
 };
-export default EditChirps;
+
+export default EditChirp;

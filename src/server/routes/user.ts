@@ -5,8 +5,8 @@ const router = express.Router();
 
 router.get('/', async(req, res)=>{
     try{
-        const user =await db.user.getAll()
-        res.json(user);
+        const users =await db.users.getAll()
+        res.json(users);
     } catch (error) {
         console.log (error);
         res.status(500).json({message: "error getting all users"});
@@ -16,13 +16,13 @@ router.get('/', async(req, res)=>{
 router.get('/:id', async(req, res)=>{
     const id=parseInt(req.params.id);
     try{
-        const [user] =await db.user.getOne(id);
+        const [users] =await db.users.getOne(id);
 
-        if(!user){
+        if(!users){
             res.status(404).json({message:"could not get user with that ID"});
             return;
         }
-        res.json(user)
+        res.json(users)
     } catch (error) {
         console.log (error);
         res.status(500).json({message: "error getting that user"});
@@ -52,7 +52,7 @@ router.put('/:id', async(req, res)=>{
     const id=parseInt(req.params.id);
     try{
         const { email, handle } = req.body;
-const results = await db.user.update(id, { email, handle });
+const results = await db.users.update(id, { email, handle });
         if (results.affectedRows===0){
             res.status(404).json({message:"could not update user with that ID"});
             return;
@@ -70,7 +70,7 @@ const results = await db.user.update(id, { email, handle });
 router.delete('/:id', async(req, res)=>{
     const id=parseInt(req.params.id);
     try{
-       const results= await db.user.destroy(id);
+       const results= await db.users.destroy(id);
         if (results.affectedRows===0){
             res.status(404).json({message:"could not delete user with that ID"});
             return;

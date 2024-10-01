@@ -1,14 +1,44 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
-const Navbar =() => {
-    return(
-    <div className='bg-dark'>
-        <NavLink className='btn btn-outline-success m-2'to={'/'}>Home</NavLink>
-        <NavLink className='btn btn-outline-success m-2'to={'/chirps'}>Fresh New Chirps!</NavLink>
-        <NavLink className='btn btn-outline-success m-2'to={'/chirps/create'}>Create New Chirps!</NavLink>
-    </div>
-    );
+const Navbar = () => {
+	const [isCollapsed, setIsCollapsed] = useState(true);
+
+	const handleToggleCollapse = () => {
+		setIsCollapsed(!isCollapsed);
+	};
+	const handleNavLinkClick = () => {
+		setIsCollapsed(true);
+	};
+	return (
+		<nav className="bg-dark navbar navbar-expand-md">
+			<div className="containter">
+				<Link className="text-decoration-none navbar-brand text-info fw-bold fs-3 mx-4" to={"/"}>
+					Chirper
+				</Link>
+			</div>
+			<button className="navbar-toggler navbar-dark mx-4" type="button" onClick={handleToggleCollapse}>
+				<span className="navbar-toggler-icon"></span>
+			</button>
+
+			<div className={`collapse navbar-collapse ${isCollapsed ? "collapse-transition" : "show collapse-transition"}`}>
+				<div className="navbar-nav">
+					<Link to={"/"} onClick={handleNavLinkClick} className="btn btn-info m-2 fw-bold">
+						Home
+					</Link>
+					<Link to={"/chirps"} onClick={handleNavLinkClick} className="btn btn-info m-2 fw-bold">
+						View Chirps
+					</Link>
+					<Link to={"/chirps/new"} onClick={handleNavLinkClick} className="btn btn-info m-2 fw-bold">
+						Create Chirps
+					</Link>
+					<Link to={"/chirps/admin"} onClick={handleNavLinkClick} className="btn btn-info m-2 fw-bold">
+						Admin
+					</Link>
+				</div>
+			</div>
+		</nav>
+	);
 };
 
-export default Navbar
+export default Navbar;

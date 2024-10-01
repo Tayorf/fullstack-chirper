@@ -1,5 +1,6 @@
 import express from 'express';
 import db from '../db';
+import { chirps } from '../types';
 
 const router = express.Router();
 
@@ -16,7 +17,7 @@ router.get('/', async(req, res)=>{
 router.get('/:id', async(req, res)=>{
     const id=parseInt(req.params.id);
     try{
-        const [chirps] =await db.user.getOne(id);
+        const [chirps] =await db.users.getOne(id);
 
         if(!chirps){
             res.status(404).json({message:"could not get chirp with that ID"});

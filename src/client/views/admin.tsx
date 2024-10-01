@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { GET } from "../services/fetchHelper";
+import { DELETE, GET } from "../services/fetchHelper";
 import { chirps, users } from "../types";
+import { Link } from "react-router-dom";
 
-const AllChirps = () => {
+const AdminPanel = () => {
 	const [chirps, setChirps] = useState<chirps[]>([]);
 	const [users, setUsers] = useState<users[]>([]);
 
+	const loadChirps = () => {
+		return GET("/api/chirps").then(setChirps);
+	};
+
 	useEffect(() => {
-		GET("/api/chirps").then(setChirps);
+		loadChirps();
 	}, []);
 
 	useEffect(() => {
@@ -18,6 +22,10 @@ const AllChirps = () => {
 	const getHandle = (userId: number) => {
 		const user = users.find((user) => user.id === userId);
 		return user ? user.handle : "Unknown";
+	};
+
+	const handleDelete = (id: number) => {
+		DELETE(`/api/chirps/${id}`).then(loadChirps);
 	};
 
 	return (
@@ -36,9 +44,9 @@ const AllChirps = () => {
 							<p>Created {new Date(chirp.created_at).toLocaleString()}</p>
 
 							<div className="card-footer">
-								<Link to={`/chirps/${chirp.id}`} className="btn btn-info">
-									Chirp Details
-								</Link>
+								<button onClick={() => handleDelete(chirp.id)} className="btn btn-danger">
+									Delete
+								</button>
 							</div>
 						</div>
 					</div>
@@ -48,4 +56,4 @@ const AllChirps = () => {
 	);
 };
 
-export default AllChirps;
+export default AdminPanel;
